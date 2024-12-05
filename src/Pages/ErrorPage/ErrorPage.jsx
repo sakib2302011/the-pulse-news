@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const ErrorPage = ({ error }) => {
   const renderErrorMessage = () => {
@@ -57,6 +57,16 @@ const ErrorPage = ({ error }) => {
       </div>
     </div>
   );
+};
+
+ErrorPage.propTypes = {
+  error: PropTypes.shape({
+    status: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    message: PropTypes.string,
+  }),
+};
+
+ErrorPage.defaultProps = {
 };
 
 export default ErrorPage;
