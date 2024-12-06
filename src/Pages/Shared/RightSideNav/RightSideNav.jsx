@@ -1,5 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const RightSideNav = () => {
   return (
@@ -17,10 +18,11 @@ const RightSideNav = () => {
       </div>
       <div className="bg-zinc-100 flex flex-col gap-5">
         <h2 className="text-xl font-semibold ms-4 mt-4">Q-Zone</h2>
-        <img src="/swimming.png" alt="swimming" />
-        <img src="/class.png" alt="classroom" />
-        <img src="/playground.png" alt="playground" />
-        <img src="/bg.png" alt="background" />
+        <div className="mx-auto">
+          <Link><img src="/swimming.png" alt="swimming" /></Link>
+          <Link><img src="/class.png" alt="classroom" /></Link>
+          <Link><img src="/playground.png" alt="playground" /></Link>
+        </div>
       </div>
     </div>
   );

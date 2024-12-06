@@ -1,30 +1,36 @@
 import { Link, NavLink } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 const Navbar = () => {
 
   const links = <>
     <li><NavLink to="/" className={({ isActive }) =>
       isActive
-        ? "bg-zinc-700 text-white px-4 py-2 rounded hover:text-white hover:bg-zinc-700"
-        : " hover:text-white hover:bg-zinc-700 px-4 py-2 rounded"
+        ? "bg-zinc-200 font-semibold px-4 py-2 rounded hover:bg-zinc-200"
+        : " hover:font-semibold hover:bg-zinc-200 px-4 py-2 rounded"
     }>Home</NavLink></li>
     <li><NavLink to="/about" className={({ isActive }) =>
       isActive
-        ? "bg-zinc-700 text-white px-4 py-2 rounded hover:text-white hover:bg-zinc-700"
-        : " hover:text-white hover:bg-zinc-700 px-4 py-2 rounded"
+        ? "bg-zinc-200 font-semibold px-4 py-2 rounded hover:bg-zinc-200"
+        : " hover:font-semibold hover:bg-zinc-200 px-4 py-2 rounded"
     }>About</NavLink></li>
     <li><NavLink to="/career" className={({ isActive }) =>
       isActive
-        ? "bg-zinc-700 text-white px-4 py-2 rounded hover:text-white hover:bg-zinc-700"
-        : " hover:text-white hover:bg-zinc-700 px-4 py-2 rounded"
+        ? "bg-zinc-200 font-semibold px-4 py-2 rounded hover:bg-zinc-200"
+        : " hover:font-semibold hover:bg-zinc-200 px-4 py-2 rounded"
     }>Career</NavLink></li>
   </>
 
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <div className="form-control">
-          <input type="text" placeholder="Search News" className="text-lg border-2 rounded-lg py-1 px-4 w-28 md:w-auto" />
+        <div className="relative w-28 md:w-auto">
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search News"
+            className="text-lg bg-inherit border-2 rounded-lg py-1 px-10 w-full"
+          />
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
