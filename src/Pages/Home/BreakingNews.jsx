@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BreakingNews = () => {
 
@@ -8,8 +8,8 @@ const BreakingNews = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const url = import.meta.env.VITE_URL;
-
+  const apiKey = import.meta.env.VITE_APIKEY;
+  const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,17 +54,16 @@ const BreakingNews = () => {
     );
   }
 
-
-  console.log(breakingNews);
-
   return (
     <div className="flex gap-5 bg-zinc-100 p-3 mt-7">
       <button className="btn btn-secondary rounded-none font-medium text-xl">Top Headlines</button>
-      <Marquee className="text-lg font-semibold">
+      <Marquee pauseOnHover={true} delay={1} speed={100} className="text-lg font-semibold">
         {
-          breakingNews.articles.map((article, index) => <Link key={index}><h2 
-          className="me-20"
-          >{article.title}</h2></Link> )
+          breakingNews.articles.map((article, index) => <h2 
+            key={index}
+            className="ms-20 cursor-pointer"
+            onClick={() => {}}
+            >{article.title}</h2> )
         }
       </Marquee>
     </div>
