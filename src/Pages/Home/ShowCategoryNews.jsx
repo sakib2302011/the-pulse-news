@@ -4,7 +4,7 @@ import { MdRemoveRedEye } from "react-icons/md";
 import { CiShare2, CiBookmark } from "react-icons/ci";
 
 const ShowCategoryNews = ({ news }) => {
-  console.log(news)
+  
   const { title, urlToImage, description, publishedAt, author } = news;
   return (
     <div>

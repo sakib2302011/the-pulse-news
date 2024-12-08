@@ -6,6 +6,8 @@ import RightSideNav from "../Shared/RightSideNav/RightSideNav";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ShowCategoryNews from "./ShowCategoryNews";
+import { ToastContainer, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
   useEffect(() => {
@@ -20,7 +22,7 @@ const Home = () => {
 
   const [showNews, setShowNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const apiKey = import.meta.env.VITE_APIKEY;
+  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
   const [url, setUrl] = useState(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
   const navigate = useNavigate();
 
@@ -78,7 +80,6 @@ const Home = () => {
       </div>
     );
   }
-  console.log(showNews);
 
   return (
     <div>
@@ -103,6 +104,19 @@ const Home = () => {
           <Link><img src="/bg.png" alt="background" className="w-full" /></Link>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+/>
     </div>
   );
 };

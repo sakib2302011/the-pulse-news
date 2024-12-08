@@ -1,15 +1,40 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import { toast } from "react-toastify";
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const RightSideNav = () => {
+
+  const { auth, user } = useContext(AuthContext);
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
   return (
     <div>
-      <div className="mb-7">
-        <h2 className="text-xl font-semibold">Login With</h2>
-        <button className="btn btn-outline btn-info w-full btn-sm mt-4 mb-2 "><FcGoogle />Login with Google</button>
-        <button className="btn btn-outline w-full btn-sm "><FaGithub />Login with Github</button>
-      </div>
+      {
+        !user && <div className="mb-7">
+          <h2 className="text-xl font-semibold">Login With</h2>
+          <button
+            onClick={() => {
+              signInWithPopup(auth, googleProvider)
+                .then(() => {
+                  toast.success("Logged In with Google successfully.");
+                })
+            }}
+            className="btn btn-outline btn-info w-full btn-sm mt-4 mb-2 "><FcGoogle />Login with Google</button>
+          <button
+            onClick={() => {
+              signInWithPopup(auth, githubProvider)
+                .then(() => {
+                  toast.success("Logged In with Github successfully");
+                })
+            }}
+            className="btn btn-outline w-full btn-sm "><FaGithub />Login with Github</button>
+        </div>
+      }
       <div className="text-base font-medium mb-7">
         <h2 className="text-xl font-semibold">Find Us On</h2>
         <a href="" className="flex items-center gap-2 mt-4 p-4 border rounded-t-lg"><img src="/fb.png" alt="fb" width="24px" />Facebook</a>

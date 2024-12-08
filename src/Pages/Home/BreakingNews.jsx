@@ -8,7 +8,7 @@ const BreakingNews = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const apiKey = import.meta.env.VITE_APIKEY;
+  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
   const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
   useEffect(() => {
     const fetchData = async () => {
