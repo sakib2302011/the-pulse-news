@@ -1,8 +1,6 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-const LeftSideNav = ({ handleShowCategory }) => {
-  const [activeCategory, setActiveCategory] = useState("National News");
-
+const LeftSideNav = ({ activeCategory, handleShowCategory }) => {
   const categories = [
     "National News",
     "Business",
@@ -15,13 +13,11 @@ const LeftSideNav = ({ handleShowCategory }) => {
   ];
 
   const handleCategory = (category) => {
-    setActiveCategory(category);
-    const lowerCategory = category.toLowerCase();
-    handleShowCategory(lowerCategory);
+    handleShowCategory(category.toLowerCase());
   };
 
   return (
-    <div>
+    <div className="sticky top-24">
       <div className="text-xl">
         <h3 className="font-semibold mb-4">All Categories</h3>
         <ul className="mt-4 cursor-pointer">
@@ -29,7 +25,9 @@ const LeftSideNav = ({ handleShowCategory }) => {
             <li
               key={category}
               className={`py-4 text-center rounded-lg ${
-                activeCategory === category ? "bg-zinc-200 font-semibold" : "font-medium text-zinc-500"
+                activeCategory.toLowerCase() === category.toLowerCase()
+                  ? "bg-zinc-200 font-semibold"
+                  : "font-medium text-zinc-500"
               }`}
               onClick={() => handleCategory(category)}
             >
@@ -40,6 +38,11 @@ const LeftSideNav = ({ handleShowCategory }) => {
       </div>
     </div>
   );
+};
+
+LeftSideNav.propTypes = {
+  activeCategory: PropTypes.string.isRequired,
+  handleShowCategory: PropTypes.func.isRequired,
 };
 
 export default LeftSideNav;

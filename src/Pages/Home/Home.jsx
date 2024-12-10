@@ -3,80 +3,91 @@ import LeftSideNav from "../Shared/LeftSideNav/LeftSideNav";
 import Navbar from "../Shared/Navbar/Navbar";
 import BreakingNews from "./BreakingNews";
 import RightSideNav from "../Shared/RightSideNav/RightSideNav";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ShowCategoryNews from "./ShowCategoryNews";
-import { ToastContainer, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
-  useEffect(() => {
-    // Change the theme for the Login route
-    document.documentElement.setAttribute("data-theme", "light");
+  const [showNews, setShowNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("national news");
 
-    // Cleanup: Reset to default theme on unmount
+  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const bypassCategory = location.state?.query;
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", "light");
     return () => {
       document.documentElement.removeAttribute("light");
     };
   }, []);
 
-  const [showNews, setShowNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
-  const [url, setUrl] = useState(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
-  const navigate = useNavigate();
-
-  const handleShowCategory = (category) => {
-    if (category == "national news") {
-      return setUrl(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
+  useEffect(() => {
+    if (bypassCategory) {
+      setActiveCategory(bypassCategory);
     }
-    setUrl(`https://newsapi.org/v2/top-headlines?category=${category}&apiKey=${apiKey}`);
-  };
+  }, [bypassCategory]);
+
+  const fetchNews = useCallback(async (category) => {
+    setLoading(true);
+    const url =
+      category === "national news"
+        ? `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
+        : `https://newsapi.org/v2/top-headlines?category=${category}&apiKey=${apiKey}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setShowNews(data.articles || []);
+    } catch (error) {
+      navigate("/error", { state: { error: { message: error.message } } });
+    } finally {
+      setLoading(false);
+    }
+  }, [apiKey, navigate]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
+    fetchNews(activeCategory);
+  }, [activeCategory, fetchNews]);
 
-        if (!response.ok) {
-          navigate("/error", {
-            state: {
-              error: {
-                status: response.status,
-                message: response.statusText || "Unknown error occurred.",
-              },
-            },
-          });
-          return;
-        }
-
-        const data = await response.json();
-        if (data && data.articles) {
-          setShowNews(data.articles); // Correctly handle articles from API response
-        } else {
-          throw new Error("Invalid API response");
-        }
-      } catch (error) {
-        navigate("/error", {
-          state: {
-            error: {
-              status: null,
-              message: error.message || "Failed to fetch data.",
-            },
-          },
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [url, navigate]);
+  const handleShowCategory = (category) => {
+    setActiveCategory(category);
+  };
 
   if (loading) {
     return (
-      <div className="flex justify-center h-screen">
-        <span className="loading loading-dots loading-lg"></span>
+      <div>
+        <Header />
+        <BreakingNews />
+        <Navbar />
+        <div className="grid grid-cols-4 gap-6 my-12">
+          <LeftSideNav activeCategory={activeCategory} handleShowCategory={handleShowCategory} />
+          <div className="col-span-2">
+            <div className="flex justify-center h-96">
+              <span className="loading loading-dots loading-lg"></span>
+            </div>
+          </div>
+          <RightSideNav />
+        </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition={Bounce}
+        />
       </div>
     );
   }
@@ -87,22 +98,15 @@ const Home = () => {
       <BreakingNews />
       <Navbar />
       <div className="grid grid-cols-4 gap-6 my-12">
-        <div>
-          <LeftSideNav handleShowCategory={handleShowCategory} />
-        </div>
+        <LeftSideNav activeCategory={activeCategory} handleShowCategory={handleShowCategory} />
         <div className="col-span-2">
-          {showNews.length > 0 ? (
-            showNews.map((news, index) => (
-              <ShowCategoryNews key={index} news={news}></ShowCategoryNews>
-            ))
+          {showNews.length ? (
+            showNews.map((news, index) => <ShowCategoryNews key={index} news={news} />)
           ) : (
             <h2 className="text-center">No news available</h2>
           )}
         </div>
-        <div>
-          <RightSideNav />
-          <Link><img src="/bg.png" alt="background" className="w-full" /></Link>
-        </div>
+        <RightSideNav />
       </div>
       <ToastContainer
         position="top-right"
@@ -116,7 +120,7 @@ const Home = () => {
         pauseOnHover
         theme="colored"
         transition={Bounce}
-/>
+      />
     </div>
   );
 };

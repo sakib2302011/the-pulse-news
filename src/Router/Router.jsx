@@ -6,6 +6,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import About from "../Pages/About/About";
 import Career from "../Pages/Career/Career";
+import SearchResult from "../Pages/SearchResult/SearchResult";
 
 
 const Router = createBrowserRouter([
@@ -33,6 +34,10 @@ const Router = createBrowserRouter([
       {
         path: "/register",
         element: <Register/>
+      },
+      {
+        path: "/search",
+        element: <SearchResult/>
       },
       {
         path: "/error",
