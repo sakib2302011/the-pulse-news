@@ -3,7 +3,8 @@ import { FiSearch } from "react-icons/fi";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import keywordExtractor from "keyword-extractor";
-
+import { CiLogout } from "react-icons/ci";
+import { FaUserCircle, FaCog } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -14,7 +15,6 @@ const Navbar = () => {
     if (e.key === "Enter") {
       const searchText = searchRef.current.value.trim();
       if (!searchText) {
-        console.log("Search field is empty.");
         return;
       }
 
@@ -27,14 +27,16 @@ const Navbar = () => {
 
       const finalSearchText = keywords.join(" ");
       if (finalSearchText) {
-        console.log("Search keywords:", finalSearchText);
         navigate("/search", { state: { query: finalSearchText } });
-      } else {
-        console.log("No relevant keywords found.");
       }
     }
   };
 
+  const handleLogOut = () => {
+    logOut()
+      .then()
+      .catch();
+  };
 
   const links = (
     <>
@@ -137,39 +139,44 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-            aria-label="User Menu"
-          >
-            <div className="w-10 rounded-full">
-              {user?.photoURL ? (
-                <img src={user.photoURL} alt="user photo" loading="lazy" />
-              ) : (
-                <img alt="user photo" src="/user.png" />
-              )}
+        {user && (
+          <div className="dropdown dropdown-left">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+              aria-label="User Menu"
+            >
+              <div className="w-10 rounded-full">
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="user photo" loading="lazy" />
+                ) : (
+                  <img alt="user photo" src="/user.png" />
+                )}
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-zinc-300  rounded-box z-50 mt-3 w-52 p-2 shadow font-semibold"
+            >
+              <li>
+                <Link to="/profile">
+                  <FaUserCircle className="text-xl" /> Profile
+                </Link>
+              </li>
+              <li>
+                <Link to="/settings">
+                  <FaCog className="text-xl" /> Settings
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleLogOut}>
+                  <CiLogout className="text-xl" /> Logout
+                </button>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <Link to="/profile">
-                Profile
-                <span className="badge">New</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/settings">Settings</Link>
-            </li>
-            <li>
-              <button onClick={logOut}>Logout</button>
-            </li>
-          </ul>
-        </div>
+        )}
       </div>
     </div>
   );
