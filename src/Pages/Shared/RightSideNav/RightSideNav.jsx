@@ -13,8 +13,8 @@ const RightSideNav = () => {
   const githubProvider = new GithubAuthProvider();
 
   return (
-    <div className="sticky top-24">
-      <div className="h-[85vh] overflow-y-scroll">
+    <div className="">
+      <div className="h-[85vh] overflow-y-scroll sticky top-24">
         {
           !user && <div className="mb-7">
             <h2 className="text-xl font-semibold">Login With</h2>

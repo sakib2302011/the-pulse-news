@@ -17,8 +17,8 @@ const LeftSideNav = ({ activeCategory, handleShowCategory }) => {
   };
 
   return (
-    <div className="sticky top-24">
-      <div className="text-xl">
+    <div>
+      <div className="text-xl sticky top-24">
         <h3 className="font-semibold mb-4">All Categories</h3>
         <ul className="mt-4 cursor-pointer">
           {categories.map((category) => (
