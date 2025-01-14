@@ -95,6 +95,7 @@ const SearchResult = () => {
       <div className="grid grid-cols-4 gap-6 my-12">
         <LeftSideNav activeCategory={activeCategory} handleShowCategory={handleShowCategory} />
         <div className="col-span-2">
+          <h2 className="text-center text-2xl font-medium mb-8">Search results for &quot;{searchQuery}&quot;</h2>
           {showNews.length ? (
             showNews.map((news, index) => <ShowCategoryNews key={index} news={news} />)
           ) : (

@@ -119,7 +119,7 @@ const Navbar = () => {
             ref={searchRef}
             onKeyDown={handleSearch}
             placeholder="Search News"
-            className="text-lg bg-inherit border-2 rounded-lg py-1 px-10 w-full focus:outline-none focus:border-blue-500"
+            className="text-base bg-inherit border-2 rounded-lg py-1 px-10 w-full focus:outline-none focus:border-blue-500"
           />
         </div>
       </div>
