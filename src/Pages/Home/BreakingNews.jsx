@@ -8,8 +8,7 @@ const BreakingNews = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
-  const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
+  const url = "http://localhost:5000/Breakings";
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +27,7 @@ const BreakingNews = () => {
         }
 
         const data = await response.json();
-        setBreakingNews(data);
+        setBreakingNews(data.articles);
       } catch (error) {
         navigate("/error", {
           state: {
@@ -54,15 +53,19 @@ const BreakingNews = () => {
     );
   }
 
+  const handleBreakingDetail = (news) => {
+    navigate("/details", { state: { news } });
+  };
+
   return (
     <div className="flex gap-5 bg-zinc-100 p-3 mt-7">
       <button className="btn btn-secondary rounded-none font-medium text-xl">Top Headlines</button>
       <Marquee pauseOnHover={true} delay={1} speed={100} className="text-lg font-semibold">
         {
-          breakingNews.articles.map((article, index) => <h2 
+          breakingNews.map((article, index) => <h2 
             key={index}
             className="ms-20 cursor-pointer"
-            onClick={() => {}}
+            onClick={()=> handleBreakingDetail(article)}
             >{article.title}</h2> )
         }
       </Marquee>

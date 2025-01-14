@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { MdRemoveRedEye } from "react-icons/md";
 import { CiShare2, CiBookmark } from "react-icons/ci";
@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 const ShowCategoryNews = ({ news }) => {
   const { title, urlToImage, description, publishedAt, author } = news;
+  const navigate = useNavigate();
 
   const formattedDate = publishedAt
     ? new Date(publishedAt).toLocaleDateString("en-US", {
@@ -14,6 +15,10 @@ const ShowCategoryNews = ({ news }) => {
         day: "numeric",
       })
     : "Unknown Date";
+
+  const handleReadMore = () => {
+    navigate("/details", { state: { news } });
+  };
 
   return (
     <div>
@@ -42,9 +47,12 @@ const ShowCategoryNews = ({ news }) => {
         <p className="text-sm text-gray-600 mt-8">
           {description || "No description available."}
         </p>
-        <Link className="text-orange-600 font-semibold">
+        <button
+          onClick={handleReadMore}
+          className="text-orange-600 font-semibold"
+        >
           Read More
-        </Link>
+        </button>
         <div className="flex justify-between mt-5 py-5 border-t">
           <div className="flex items-center gap-2">
             <div className="flex">

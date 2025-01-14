@@ -13,12 +13,10 @@ import FilterSortBar from "./FilterSortBar";
 const SearchResult = () => {
   const [showNews, setShowNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [url, setUrl] = useState(null);
   const [activeCategory, setActiveCategory] = useState("");
 
   const location = useLocation();
   const searchQuery = location.state?.query || "general";
-  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,15 +28,13 @@ const SearchResult = () => {
 
   useEffect(() => {
     setActiveCategory(searchQuery); // Sync active category with query
-    setUrl(`https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${apiKey}`);
-  }, [searchQuery, apiKey]);
+  }, [searchQuery]);
 
   useEffect(() => {
-    if (!url) return;
-
+    
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(`http://localhost:5000/news/${searchQuery}`);
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
@@ -54,12 +50,27 @@ const SearchResult = () => {
     };
 
     fetchData();
-  }, [url, navigate]);
+  }, [searchQuery, navigate]);
 
   const onApplyFilters = (startDate, endDate, sortBy) => {
-    setUrl(
-      `https://newsapi.org/v2/everything?q=${searchQuery}${startDate ? `&from=${startDate}` : ""}${endDate ? `&to=${endDate}` : ""}${sortBy ? `&sortBy=${sortBy}` : ""}&apiKey=${apiKey}`
-    );
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/news/${searchQuery}/${startDate}/${endDate}/${sortBy}`);
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setShowNews(data.articles || []);
+      } catch (error) {
+        navigate("/error", {
+          state: { error: { message: error.message } },
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   };
 
   const handleShowCategory = (category) => {

@@ -7,6 +7,8 @@ import Register from "../Pages/Register/Register";
 import About from "../Pages/About/About";
 import Career from "../Pages/Career/Career";
 import SearchResult from "../Pages/SearchResult/SearchResult";
+import NewsDetails from "../Pages/NewsDetails/NewsDetails";
+import PrivateRoute from "./PrivateRoute";
 
 
 const Router = createBrowserRouter([
@@ -18,6 +20,10 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home />
+      },
+      {
+        path: "/details",
+        element: <PrivateRoute><NewsDetails/></PrivateRoute>
       },
       {
         path: "/about",
@@ -37,7 +43,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <SearchResult/>
+        element: <PrivateRoute><SearchResult/></PrivateRoute>
       },
       {
         path: "/error",

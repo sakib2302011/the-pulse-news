@@ -36,8 +36,8 @@ const Home = () => {
     setLoading(true);
     const url =
       category === "national news"
-        ? `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
-        : `https://newsapi.org/v2/top-headlines?category=${category}&apiKey=${apiKey}`;
+        ? "http://localhost:5000/national"
+        : `http://localhost:5000/${category}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {

@@ -4,6 +4,7 @@ import { AuthContext } from './../../Providers/AuthProvider';
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import {  useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const emailRef = useRef(null);
   const passRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", "login-theme");
@@ -53,6 +55,8 @@ const Login = () => {
       .then(() => {
         setLoading(false);
         toast.success("Logged in successfully.");
+        navigate("/");
+
       })
       .catch(() => {
         setLoading(false);
