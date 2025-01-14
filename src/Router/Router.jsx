@@ -44,10 +44,6 @@ const Router = createBrowserRouter([
       {
         path: "/search",
         element: <PrivateRoute><SearchResult/></PrivateRoute>
-      },
-      {
-        path: "/error",
-        errorElement: <ErrorPage/>
       }
     ]
   },
