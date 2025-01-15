@@ -14,7 +14,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("national news");
 
-  const apiKey = import.meta.env.VITE_NEWSAPIKEY;
   const navigate = useNavigate();
   const location = useLocation();
   const bypassCategory = location.state?.query;
@@ -36,8 +35,8 @@ const Home = () => {
     setLoading(true);
     const url =
       category === "national news"
-        ? "http://localhost:5000/national"
-        : `http://localhost:5000/${category}`;
+        ? "https://the-pulse-news-backend.vercel.app/national"
+        : `https://the-pulse-news-backend.vercel.app/${category}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -50,7 +49,7 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  }, [apiKey, navigate]);
+  }, []);
 
   useEffect(() => {
     fetchNews(activeCategory);

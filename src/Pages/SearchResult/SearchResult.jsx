@@ -34,7 +34,7 @@ const SearchResult = () => {
     
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/news/${searchQuery}`);
+        const response = await fetch(`https://the-pulse-news-backend.vercel.app/news/${searchQuery}`);
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
@@ -55,7 +55,7 @@ const SearchResult = () => {
   const onApplyFilters = (startDate, endDate, sortBy) => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/news/${searchQuery}/${startDate}/${endDate}/${sortBy}`);
+        const response = await fetch(`https://the-pulse-news-backend.vercel.app/news/${searchQuery}/${startDate}/${endDate}/${sortBy}`);
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }

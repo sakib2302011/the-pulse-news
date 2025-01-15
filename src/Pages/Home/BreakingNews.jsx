@@ -8,7 +8,7 @@ const BreakingNews = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const url = "http://localhost:5000/Breakings";
+  const url = "https://the-pulse-news-backend.vercel.app/Breakings";
   useEffect(() => {
     const fetchData = async () => {
       try {
