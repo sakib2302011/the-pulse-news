@@ -140,7 +140,7 @@ const Navbar = () => {
           </Link>
         )}
         {user && (
-          <div className="dropdown dropdown-left">
+          <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -160,18 +160,8 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-zinc-300  rounded-box z-50 mt-3 w-52 p-2 shadow font-semibold"
             >
               <li>
-                <Link to="/profile">
-                  <FaUserCircle className="text-xl" /> Profile
-                </Link>
-              </li>
-              <li>
-                <Link to="/settings">
-                  <FaCog className="text-xl" /> Settings
-                </Link>
-              </li>
-              <li>
                 <button onClick={handleLogOut}>
-                  <CiLogout className="text-xl" /> Logout
+                  <CiLogout className="text-xl font-extrabold" /> Logout
                 </button>
               </li>
             </ul>
