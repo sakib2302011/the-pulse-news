@@ -4,7 +4,6 @@ import { useContext, useRef } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import keywordExtractor from "keyword-extractor";
 import { CiLogout } from "react-icons/ci";
-import { FaUserCircle, FaCog } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
