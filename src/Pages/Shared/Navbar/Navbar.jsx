@@ -80,36 +80,8 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 navbar bg-base-100">
-      {/* Mobile Menu */}
-      <div className="navbar-start lg:hidden">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5"
-              />
-            </svg>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            {links}
-          </ul>
-        </div>
-      </div>
-
       {/* Search Bar */}
-      <div className="navbar-start hidden lg:flex">
+      <div className="navbar-start">
         <div className="relative w-28 md:w-auto">
           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
@@ -124,7 +96,7 @@ const Navbar = () => {
       </div>
 
       {/* Links */}
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center">
         <ul className="menu menu-horizontal px-1 text-lg">{links}</ul>
       </div>
 
@@ -156,7 +128,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-zinc-300  rounded-box z-50 mt-3 w-52 p-2 shadow font-semibold"
+              className="menu menu-sm dropdown-content bg-zinc-300 rounded-box z-50 mt-3 w-52 p-2 shadow font-semibold"
             >
               <li>
                 <button onClick={handleLogOut}>
